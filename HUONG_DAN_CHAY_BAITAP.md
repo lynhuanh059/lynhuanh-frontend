@@ -76,7 +76,7 @@ dotnet run --launch-profile "http"
 ```
 *(Backend sẽ tự động kết nối CSDL SQL Server `.\\SQLEXPRESS`, tự động tạo database `lynhuanh`, tạo bảng và nạp sẵn tài khoản test mẫu, lắng nghe tại cổng `http://localhost:5055`).*
 
-Trang Swagger API xem tại: `http://localhost:5055/swagger`
+Trang Swagger API (đã deploy trên Render) xem tại: https://lynhuanh-backend.onrender.com/swagger/index.html
 
 ---
 
