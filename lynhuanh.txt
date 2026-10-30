@@ -35,7 +35,22 @@ NHỮNG GÌ ĐÃ LÀM VÀ ĐIỂM DỰ TÍNH
    - Giao diện Material 3, tông xanh teal, thống nhất giữa các màn hình
    - API deploy trên Render (không dùng localhost), cả nhóm cài app là dùng được
 
-TỔNG ĐIỂM DỰ TÍNH: 8.5 / 10
+5. YÊU CẦU BỔ SUNG CỦA THẦY (2 chức năng mới)
+   a) Đăng nhập bằng khuôn mặt + vân tay ................. đã làm
+      - Lần đầu: đăng nhập bằng tài khoản + mật khẩu + OTP (email)
+      - Sau OTP thành công, app hỏi bật "Đăng nhập bằng khuôn mặt / vân tay"
+      - Lần sau: ở màn hình đăng nhập bấm nút "Đăng nhập nhanh bằng khuôn mặt / vân tay",
+        xác thực sinh trắc học của thiết bị là vào thẳng app (không cần mật khẩu + OTP)
+      - Có công tắc bật/tắt trong Cài đặt -> Bảo mật
+   b) Task mới "Cài đặt" (biểu tượng bánh răng ở đầu màn hình chính, cả 3 vai trò) ... đã làm
+      - Thay đổi cỡ chữ: thanh trượt 80%-150% và các mức Nhỏ / Vừa / Lớn / Rất lớn,
+        áp dụng cho toàn bộ app, có xem trước, được lưu lại cho lần mở sau
+      - Thay đổi màu nền: 7 màu nền (xanh ngọc nhạt, trắng, kem, xanh trời, hồng phấn,
+        tím nhạt, xanh lá nhạt), áp dụng toàn app, được lưu lại
+      - Cập nhật hồ sơ cá nhân: sửa họ tên, email, lưu lên server (API Render)
+      - Nút "Khôi phục giao diện mặc định"
+
+TỔNG ĐIỂM DỰ TÍNH: 8.5 / 10 (chưa tính điểm 2 yêu cầu bổ sung của thầy)
 
 ĐÁP ỨNG CÁC RÀNG BUỘC CỦA ĐỀ
 - Tên project là tên cá nhân: lynhuanh
