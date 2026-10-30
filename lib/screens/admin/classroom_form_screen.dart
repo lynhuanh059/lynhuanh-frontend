@@ -103,7 +103,6 @@ class _ClassRoomFormScreenState extends State<ClassRoomFormScreen> {
   Widget build(BuildContext context) {
     final isEdit = widget.classRoom != null;
     return Scaffold(
-      backgroundColor: AppTheme.background,
       appBar: AppBar(title: Text(isEdit ? 'Chỉnh sửa lớp học' : 'Thêm lớp học')),
       body: SafeArea(
         child: SingleChildScrollView(

@@ -4,9 +4,8 @@ import '../../services/api_service.dart';
 import '../../models/user_model.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/app_widgets.dart';
-import '../admin/admin_dashboard.dart';
-import '../lecturer/lecturer_dashboard.dart';
-import '../student/student_dashboard.dart';
+import '../../services/biometric_login_service.dart';
+import 'role_router.dart';
 
 class OtpScreen extends StatefulWidget {
   final String usernameOrEmail;
@@ -87,6 +86,40 @@ class _OtpScreenState extends State<OtpScreen> {
     if (mounted) setState(() => _resending = false);
   }
 
+  /// Sau lần đăng nhập đầu (mật khẩu + OTP) mời bật đăng nhập bằng khuôn mặt / vân tay.
+  Future<void> _offerBiometric(UserModel user) async {
+    try {
+      final saved = await BiometricLoginService.savedUser();
+      if (saved != null && saved.id == user.id) {
+        await BiometricLoginService.enable(user); // cập nhật bản lưu
+        return;
+      }
+      if (!await BiometricLoginService.isSupported()) return;
+      final label = await BiometricLoginService.label();
+      if (!mounted) return;
+      final yes = await showDialog<bool>(
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) => AlertDialog(
+          title: Text('Đăng nhập bằng $label?'),
+          content: Text('Lần sau bạn chỉ cần xác thực $label để vào app, không cần nhập mật khẩu và OTP.'),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Để sau')),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              style: ElevatedButton.styleFrom(minimumSize: const Size(96, 44)),
+              child: const Text('Bật ngay'),
+            ),
+          ],
+        ),
+      );
+      if (yes == true) {
+        final ok = await BiometricLoginService.authenticate();
+        if (ok) await BiometricLoginService.enable(user);
+      }
+    } catch (_) {}
+  }
+
   void _verifyOtp() async {
     final otp = _otpController.text.trim();
     if (otp.length < 6) {
@@ -106,14 +139,9 @@ class _OtpScreenState extends State<OtpScreen> {
         final user = UserModel.fromJson(res['user']);
         if (!mounted) return;
 
-        Widget nextScreen;
-        if (user.role == 'Admin') {
-          nextScreen = AdminDashboard(user: user);
-        } else if (user.role == 'Lecturer') {
-          nextScreen = LecturerDashboard(user: user);
-        } else {
-          nextScreen = StudentDashboard(user: user);
-        }
+        await _offerBiometric(user);
+        if (!mounted) return;
+        final nextScreen = dashboardFor(user);
 
         Navigator.pushAndRemoveUntil(
           context,
@@ -145,7 +173,6 @@ class _OtpScreenState extends State<OtpScreen> {
   Widget build(BuildContext context) {
     final target = widget.email.isNotEmpty ? widget.email : widget.usernameOrEmail;
     return Scaffold(
-      backgroundColor: AppTheme.background,
       appBar: AppBar(title: const Text('Xác thực 2 lớp')),
       body: SafeArea(
         child: SingleChildScrollView(

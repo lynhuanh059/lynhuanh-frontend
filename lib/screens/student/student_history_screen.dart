@@ -37,7 +37,6 @@ class _StudentHistoryScreenState extends State<StudentHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.background,
       appBar: AppBar(
         title: const Text('Lịch sử chuyên cần'),
         actions: [IconButton(icon: const Icon(Icons.refresh_rounded), onPressed: _loadHistory)],

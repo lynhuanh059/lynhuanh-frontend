@@ -1,0 +1,10 @@
+   Mở trình duyệt, vào: https://lynhuanh-backend.onrender.com/
+   Thấy {"status":"ok","service":"Smart Attendance API"} là server đã chạy.
+
+   MỞ SẴN CÁC TAB TRÌNH DUYỆT
+   - Server:  https://lynhuanh-backend.onrender.com/
+   - Swagger: https://lynhuanh-backend.onrender.com/swagger/index.html
+   - Gmail:   https://mail.google.com  (đăng nhập lynhuanh059@gmail.com để lấy mã OTP)
+   - GitHub backend:  https://github.com/lynhuanh059/lynhuanh-backend
+   - GitHub frontend: https://github.com/lynhuanh059/lynhuanh-frontend
+   - Video YouTube (nếu đã đăng): https://youtu.be/2SAMTPGr0IM

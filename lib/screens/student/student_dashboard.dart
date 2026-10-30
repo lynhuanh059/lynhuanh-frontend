@@ -7,6 +7,7 @@ import '../../widgets/app_widgets.dart';
 import 'qr_scanner_screen.dart';
 import 'student_history_screen.dart';
 import '../auth/login_screen.dart';
+import '../settings/settings_screen.dart';
 
 class StudentDashboard extends StatefulWidget {
   final UserModel user;
@@ -18,6 +19,19 @@ class StudentDashboard extends StatefulWidget {
 }
 
 class _StudentDashboardState extends State<StudentDashboard> {
+  Future<void> _openSettings() async {
+    final updated = await Navigator.push<UserModel>(
+      context,
+      MaterialPageRoute(builder: (_) => SettingsScreen(user: widget.user)),
+    );
+    if (updated != null && mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => StudentDashboard(user: updated)),
+      );
+    }
+  }
+
   List<AttendanceSessionModel> _activeSessions = [];
   bool _isLoading = true;
   @override
@@ -46,7 +60,6 @@ class _StudentDashboardState extends State<StudentDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.background,
       body: RefreshIndicator(
         onRefresh: () async => _loadSessions(),
         child: ListView(
@@ -65,6 +78,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
                     Navigator.push(context, MaterialPageRoute(builder: (_) => StudentHistoryScreen(student: widget.user)));
                   },
                 ),
+                IconButton(tooltip: 'Cài đặt', icon: const Icon(Icons.settings_rounded), onPressed: _openSettings),
                 IconButton(
                   tooltip: 'Đăng xuất',
                   icon: const Icon(Icons.logout_rounded),

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import '../../services/api_service.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/app_widgets.dart';
+import '../../models/user_model.dart';
+import '../../services/biometric_login_service.dart';
 import 'otp_screen.dart';
+import 'role_router.dart';
 import 'register_screen.dart';
 import '../settings/server_settings_screen.dart';
 
@@ -18,6 +21,43 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController(text: '123');
   bool _isLoading = false;
   String _selectedRolePreset = 'Student';
+  UserModel? _savedUser;
+  String _bioLabel = 'khuôn mặt / vân tay';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedBiometric();
+  }
+
+  Future<void> _loadSavedBiometric() async {
+    final u = await BiometricLoginService.savedUser();
+    final label = await BiometricLoginService.label();
+    if (!mounted) return;
+    setState(() {
+      _savedUser = u;
+      _bioLabel = label;
+    });
+  }
+
+  /// Lần sau: đăng nhập bằng khuôn mặt / vân tay, bỏ qua mật khẩu + OTP.
+  Future<void> _biometricLogin() async {
+    final u = _savedUser;
+    if (u == null) return;
+    final ok = await BiometricLoginService.authenticate();
+    if (!mounted) return;
+    if (!ok) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Xác thực $_bioLabel chưa thành công'), backgroundColor: AppTheme.danger),
+      );
+      return;
+    }
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (_) => dashboardFor(u)),
+      (route) => false,
+    );
+  }
 
   void _login() async {
     final user = _usernameController.text.trim();
@@ -80,7 +120,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.background,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -143,6 +182,28 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
+                          if (_savedUser != null) ...[
+                            OutlinedButton.icon(
+                              style: OutlinedButton.styleFrom(
+                                minimumSize: const Size(double.infinity, 54),
+                                side: const BorderSide(color: AppTheme.primaryDark, width: 1.5),
+                                foregroundColor: AppTheme.primaryDark,
+                              ),
+                              onPressed: _biometricLogin,
+                              icon: const Icon(Icons.fingerprint_rounded, size: 26),
+                              label: Text(
+                                'Đăng nhập nhanh bằng $_bioLabel\n(${_savedUser!.fullName})',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                            const SizedBox(height: 14),
+                            const Center(
+                              child: Text('hoặc đăng nhập bằng mật khẩu',
+                                  style: TextStyle(fontSize: 12, color: AppTheme.textMuted)),
+                            ),
+                            const SizedBox(height: 14),
+                          ],
                           const Text('Đăng nhập',
                               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: AppTheme.textPrimary)),
                           const SizedBox(height: 4),

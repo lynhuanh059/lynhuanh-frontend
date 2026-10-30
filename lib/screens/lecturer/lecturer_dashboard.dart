@@ -7,6 +7,7 @@ import '../../theme/app_theme.dart';
 import '../../widgets/app_widgets.dart';
 import 'dynamic_qr_screen.dart';
 import '../auth/login_screen.dart';
+import '../settings/settings_screen.dart';
 
 class LecturerDashboard extends StatefulWidget {
   final UserModel user;
@@ -18,6 +19,19 @@ class LecturerDashboard extends StatefulWidget {
 }
 
 class _LecturerDashboardState extends State<LecturerDashboard> {
+  Future<void> _openSettings() async {
+    final updated = await Navigator.push<UserModel>(
+      context,
+      MaterialPageRoute(builder: (_) => SettingsScreen(user: widget.user)),
+    );
+    if (updated != null && mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => LecturerDashboard(user: updated)),
+      );
+    }
+  }
+
   List<ClassRoomModel> _myClasses = [];
   List<AttendanceSessionModel> _sessions = [];
   bool _isLoading = true;
@@ -125,7 +139,6 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
   Widget build(BuildContext context) {
     final openCount = _sessions.where((x) => x.isActive && x.expireAt.isAfter(DateTime.now())).length;
     return Scaffold(
-      backgroundColor: AppTheme.background,
       body: RefreshIndicator(
         onRefresh: () async => _loadData(),
         child: ListView(
@@ -138,6 +151,7 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
               icon: Icons.co_present_rounded,
               actions: [
                 IconButton(tooltip: 'Làm mới', icon: const Icon(Icons.refresh_rounded), onPressed: _loadData),
+                IconButton(tooltip: 'Cài đặt', icon: const Icon(Icons.settings_rounded), onPressed: _openSettings),
                 IconButton(
                   tooltip: 'Đăng xuất',
                   icon: const Icon(Icons.logout_rounded),

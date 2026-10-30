@@ -1,0 +1,44 @@
+BÀI KIỂM TRA MÔN LẬP TRÌNH DI ĐỘNG - ĐỀ 3
+Tên project: lynhuanh (App điểm danh cho sinh viên)
+Nhóm: 4 con mèo
+Công nghệ: Flutter (frontend) + ASP.NET Core 8 Web API (backend) + PostgreSQL
+
+LINK NỘP
+- Backend (GitHub):  https://github.com/lynhuanh059/lynhuanh-backend
+- Frontend (GitHub): https://github.com/lynhuanh059/lynhuanh-frontend
+- API đã deploy (Render): https://lynhuanh-backend.onrender.com
+- Swagger: https://lynhuanh-backend.onrender.com/swagger/index.html
+- Video YouTube: https://youtu.be/2SAMTPGr0IM
+
+TÀI KHOẢN THỬ (mật khẩu 123, OTP gửi về lynhuanh059@gmail.com)
+- admin / giangvien / sinhvien
+
+NHỮNG GÌ ĐÃ LÀM VÀ ĐIỂM DỰ TÍNH
+
+1. Chức năng cơ bản + CRUD ............................ 4 / 4.5
+   - Đăng ký bằng email, chọn vai trò Sinh viên / Giảng viên
+   - Đăng nhập: tài khoản + mật khẩu + OTP gửi qua email thật
+   - Phân quyền Admin / Giảng viên / Sinh viên, mỗi vai trò một giao diện
+   - Admin: thêm, sửa, xóa người dùng và lớp học
+   - Giảng viên: tạo phiên điểm danh, xem danh sách điểm danh
+   - Sinh viên: điểm danh, xem lịch sử
+
+2. 3 tính năng nâng cao ................................ 3 / 3.5
+   - (e) QR + vân tay: quét QR bằng camera, xác thực vân tay trước khi điểm danh
+   - (b) Chia sẻ vị trí: kiểm tra GPS, chỉ điểm danh khi nằm trong bán kính lớp học
+   - (d) Đo tiếng ồn lớp học: dùng micro đo dB, lưu cùng lần điểm danh, giảng viên xem độ ồn từng sinh viên và trung bình lớp
+
+3. Tính năng sáng tạo mới ............................... 0.5 / 1
+   - QR động: mã QR do server tính, tự đổi sau mỗi 15 giây, chống chụp ảnh gửi người khác điểm danh hộ
+
+4. Giao diện đẹp + chạy được cho cả nhóm ............... 1 / 1
+   - Giao diện Material 3, tông xanh teal, thống nhất giữa các màn hình
+   - API deploy trên Render (không dùng localhost), cả nhóm cài app là dùng được
+
+TỔNG ĐIỂM DỰ TÍNH: 8.5 / 10
+
+ĐÁP ỨNG CÁC RÀNG BUỘC CỦA ĐỀ
+- Tên project là tên cá nhân: lynhuanh
+- Chỉ dùng Flutter cho frontend
+- API đã deploy trên Render, không dùng localhost
+- 2 link GitHub riêng: một repo chỉ có backend, một repo chỉ có frontend Flutter

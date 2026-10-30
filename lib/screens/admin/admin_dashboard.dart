@@ -6,6 +6,7 @@ import '../../theme/app_theme.dart';
 import '../../widgets/app_widgets.dart';
 import 'classroom_form_screen.dart';
 import '../auth/login_screen.dart';
+import '../settings/settings_screen.dart';
 
 class AdminDashboard extends StatefulWidget {
   final UserModel user;
@@ -17,6 +18,19 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> with SingleTickerProviderStateMixin {
+  Future<void> _openSettings() async {
+    final updated = await Navigator.push<UserModel>(
+      context,
+      MaterialPageRoute(builder: (_) => SettingsScreen(user: widget.user)),
+    );
+    if (updated != null && mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => AdminDashboard(user: updated)),
+      );
+    }
+  }
+
   late TabController _tabController;
   List<ClassRoomModel> _classRooms = [];
   List<UserModel> _users = [];
@@ -165,7 +179,6 @@ class _AdminDashboardState extends State<AdminDashboard> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.background,
       body: Column(
         children: [
           GradientHeader(
@@ -174,7 +187,9 @@ class _AdminDashboardState extends State<AdminDashboard> with SingleTickerProvid
             icon: Icons.admin_panel_settings_rounded,
             actions: [
               IconButton(tooltip: 'Làm mới', icon: const Icon(Icons.refresh_rounded), onPressed: _loadData),
-              IconButton(tooltip: 'Đăng xuất', icon: const Icon(Icons.logout_rounded), onPressed: _logout),
+              IconButton(tooltip: 'Cài đặt', icon: const Icon(Icons.settings_rounded), onPressed: _openSettings),
+              IconButton(
+                  tooltip: 'Đăng xuất', icon: const Icon(Icons.logout_rounded), onPressed: _logout),
             ],
             bottom: Padding(
               padding: const EdgeInsets.only(right: 8),

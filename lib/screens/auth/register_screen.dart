@@ -62,7 +62,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.background,
       appBar: AppBar(title: const Text('Tạo tài khoản')),
       body: SafeArea(
         child: SingleChildScrollView(

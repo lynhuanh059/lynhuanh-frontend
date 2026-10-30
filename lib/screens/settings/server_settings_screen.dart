@@ -45,7 +45,6 @@ class _ServerSettingsScreenState extends State<ServerSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.background,
       appBar: AppBar(title: const Text('Máy chủ API')),
       body: _loading
           ? const Center(child: CircularProgressIndicator())

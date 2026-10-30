@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lynhuanh/main.dart';
+import 'package:lynhuanh/models/user_model.dart';
+import 'package:lynhuanh/screens/settings/settings_screen.dart';
 import 'package:lynhuanh/theme/app_theme.dart';
 import 'package:lynhuanh/widgets/app_widgets.dart';
 
@@ -35,5 +37,20 @@ void main() {
     ));
     expect(find.text('Trống'), findsOneWidget);
     expect(find.text('Đang mở'), findsOneWidget);
+  });
+
+  testWidgets('Màn hình Cài đặt: cỡ chữ, màu nền, hồ sơ cá nhân', (WidgetTester tester) async {
+    final user = UserModel(id: 1, username: 'sinhvien', fullName: 'Sinh Viên', email: 'a@b.com', role: 'Student');
+    tester.view.physicalSize = const Size(800, 3200);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(MaterialApp(theme: AppTheme.theme, home: SettingsScreen(user: user)));
+    await tester.pump();
+    expect(find.text('Cài đặt'), findsOneWidget);
+    expect(find.text('Hồ sơ cá nhân'), findsOneWidget);
+    expect(find.text('Cỡ chữ'), findsOneWidget);
+    expect(find.text('Màu nền'), findsOneWidget);
+    expect(find.text('Lưu hồ sơ'), findsOneWidget);
   });
 }

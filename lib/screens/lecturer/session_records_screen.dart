@@ -137,7 +137,6 @@ class _SessionRecordsScreenState extends State<SessionRecordsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.background,
       appBar: AppBar(
         title: Text(widget.sessionTitle),
         actions: [IconButton(icon: const Icon(Icons.refresh_rounded), onPressed: _loadRecords)],

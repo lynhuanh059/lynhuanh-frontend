@@ -82,7 +82,6 @@ class _DynamicQrScreenState extends State<DynamicQrScreen> {
     });
 
     return Scaffold(
-      backgroundColor: AppTheme.background,
       appBar: AppBar(
         title: const Text('Mã QR điểm danh'),
         actions: [
